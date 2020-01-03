@@ -30,7 +30,7 @@ class Student(models.Model):
     @classmethod
     def gen_fake(cls):
         fake = Faker()
-        student = cls(first_name=fake.name(), last_name=fake.name(), birth_date=fake.date(), email=fake.email(),
+        student = cls(first_name=fake.first_name(), last_name=fake.last_name(), birth_date=fake.date(), email=fake.email(),
                       telephone=random.randint(1111111, 9999999))
         student.save()
 
