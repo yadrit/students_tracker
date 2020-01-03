@@ -42,7 +42,7 @@ class Student(models.Model):
 
 class Group(models.Model):
     group_code = models.CharField(max_length=20)
-    num_of_students = models.IntegerField(max_length=3)
+    num_of_students = models.CharField(max_length=3)
     faculty = models.CharField(max_length=50)
     start_year = models.DateField()
     senior_last_name = models.CharField(max_length=20)
