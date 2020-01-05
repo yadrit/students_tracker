@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from students.views import gen_student
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('gen_fake/', gen_fake),
+    path('gen_fake/', gen_student),
 ]

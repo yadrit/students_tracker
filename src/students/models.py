@@ -33,6 +33,7 @@ class Student(models.Model):
         student = cls(first_name=fake.first_name(), last_name=fake.last_name(), birth_date=fake.date(), email=fake.email(),
                       telephone=random.randint(1111111, 9999999))
         student.save()
+        return student
 
 # 6.2 Create command which will generate 100 of students - it should run as custom django-admin command
 # and add students to DB
