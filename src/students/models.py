@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from faker import Faker
 import random
+from random import randint
 
 """
 CREATE TABLE students_student (
@@ -45,6 +46,16 @@ class Group(models.Model):
     group_code = models.CharField(max_length=20)
     num_of_students = models.CharField(max_length=3)
     faculty = models.CharField(max_length=50)
-    start_year = models.DateField()
+    start_year = models.CharField(max_length=4)
     senior_last_name = models.CharField(max_length=20)
     senior_phone = models.CharField(max_length=16)
+
+    def get_group_info(self):
+        return f'{self.group_code} | {self.faculty} | {self.start_year} | {self.num_of_students}'
+
+    @classmethod
+    def generate_group(cls):
+        fake = Faker()
+        group = cls(group_code=fake.license_plate(), faculty=fake.bs(), start_year=fake.year(), num_of_students=randint(0, 50) )
+        group.save()
+        return group
