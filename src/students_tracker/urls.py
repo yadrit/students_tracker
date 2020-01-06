@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from students.views import gen_student, students, gen_group, groups
+from teachers.views import gen_teacher, teachers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('gen_fake/', gen_student),
     path('students/', students),
     path('gen_group/', gen_group),
-    path('groups/', groups)
+    path('groups/', groups),
+    path('gen_teacher/', gen_teacher),
+    path('teachers/', teachers)
 ]
