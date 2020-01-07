@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.db.models import Q
 from teachers.models import Teacher
 
 def gen_teacher(request):
@@ -11,8 +12,9 @@ def teachers(request):
     queryset = Teacher.objects.all()
     response = ''
     fn = request.GET.get('first_name')
+
     if fn:
-        queryset = queryset.filter(first_name__contains=fn)
+        queryset = queryset.filter(Q(first_name__icontains=fn) | Q(last_name__icontains=fn) | Q(email__icontains=fn))
 
     for teacher in queryset:
         response += teacher.get_teacher_info() + '<br>'
