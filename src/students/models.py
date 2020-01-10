@@ -23,7 +23,7 @@ class Student(models.Model):
 
     @classmethod
     def generate_student(cls):
-        student = cls(first_name='D', last_name='K', birth_date=datetime.now().date(), email='asdas@gmail.com', telephone='12312312')
+        student = cls(first_name='D', last_name='K', birth_date=datetime.now().date(), email='asdas@gmail.com', telephone='+41x21oas4212')
         student.save()
 
 # 6.1 Add Faker module, return fake students in console
