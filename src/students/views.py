@@ -6,10 +6,12 @@ from students.models import Student, Group
 
 # Filter by first_name
 
+
 def gen_student(request):
     student = Student.gen_fake()
     data = f'{student.first_name} {student.last_name}'
     return HttpResponse(data)
+
 
 def students(request):
     queryset = Student.objects.all()
@@ -38,10 +40,12 @@ def students(request):
 
 # Filter by first_name, last_name and email
 
+
 def gen_group(request):
     group = Group.generate_group()
     data = f'{group.group_code} | {group.faculty} | {group.start_year} | {group.num_of_students}'
     return HttpResponse(data)
+
 
 def groups(request):
     queryset = Group.objects.all()
@@ -60,6 +64,7 @@ def groups(request):
 
 # Logic for Students webform
 
+
 def students_add(request):
     if request.method == 'POST':
         form = StudentsAddForm(request.POST)
@@ -74,6 +79,7 @@ def students_add(request):
                   context={'form': form})
 
 # Logic for Groups webform
+
 
 def groups_add(request):
     if request.method == 'POST':
