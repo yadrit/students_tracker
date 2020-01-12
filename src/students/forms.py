@@ -26,4 +26,4 @@ class ContactForm(Form):
         message = data['text']
         email_from = data['email']
         recipient_list = [settings.EMAIL_HOST_USER, ]
-        send_mail(subject, message, email_from, recipient_list)
+        send_mail(subject, message, email_from, recipient_list, fail_silently=False)
