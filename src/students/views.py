@@ -1,8 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
-from students.forms import StudentsAddForm, GroupsAddForm
+from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
 from students.models import Student, Group
-
+from django.urls import reverse
 
 # Filter by first_name
 
@@ -70,7 +70,7 @@ def students_add(request):
         form = StudentsAddForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect(reverse('students'))
     else:
         form = StudentsAddForm()
 
@@ -93,3 +93,43 @@ def groups_add(request):
     return render(request,
                   'groups_add.html',
                   context={'form': form})
+
+# Logic for Students edit webform
+
+
+def students_edit(request, pk):
+    try:
+        student = Student.objects.get(id=pk)
+    except Student.DoesNotExist:
+        return HttpResponseNotFound(f'Student with id {pk} not found')
+
+    if request.method == 'POST':
+        form = StudentsAddForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = StudentsAddForm(instance=student)
+
+    return render(request,
+                  'students_edit.html',
+                  context={'form': form, 'pk': pk})
+
+
+# Logic for contact form
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = ContactForm()
+
+    return render(request,
+                  'contact.html',
+                  context={'form': form})
+
+
+
