@@ -2,6 +2,7 @@ from django.db import models
 from faker import Faker
 import random
 
+
 class Teacher(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
