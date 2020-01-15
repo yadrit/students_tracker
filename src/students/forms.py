@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
 
+
 class StudentsAddForm(ModelForm):
     class Meta:
         model = Student
@@ -14,6 +15,7 @@ class GroupsAddForm(ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
+
 
 class ContactForm(Form):
     email = EmailField()
