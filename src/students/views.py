@@ -86,7 +86,7 @@ def groups_add(request):
         form = GroupsAddForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect(reverse('groups'))
     else:
         form = GroupsAddForm()
 
@@ -118,6 +118,7 @@ def students_edit(request, pk):
 
 # Logic for contact form
 
+
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -132,4 +133,23 @@ def contact(request):
                   context={'form': form})
 
 
+# Logic for Groups edit webform
 
+
+def groups_edit(request, pk):
+    try:
+        group = Group.objects.get(id=pk)
+    except Group.DoesNotExist:
+        return HttpResponseNotFound(f'Group with id {pk} not found')
+
+    if request.method == 'POST':
+        form = GroupsAddForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('groups'))
+    else:
+        form = GroupsAddForm(instance=group)
+
+    return render(request,
+                  'groups_edit.html',
+                  context={'form': form, 'pk': pk})

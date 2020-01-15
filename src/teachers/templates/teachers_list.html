@@ -6,11 +6,23 @@
 </head>
 <body>
 
-<form action="/teachers/" method="get">
+<p>
+<button onclick="window.location.href = '{% url 'teachers-add' %}';">Add Teacher</button>
+</p>
+
+<form action="{% url 'teachers' %}" method="get">
     <input name="first_name">
     <input name="submit" type="submit">
 </form>
 
+<ul>
+{% for teacher in teachers %}
+<li><a href="{% url 'teachers' teacher %}">{{ teacher }} Archive</a></li>
+{% endfor %}
+</ul>
+
+<p></p>
+{% url 'teachers:index' %}
 {{ teachers_list|safe }}
 
 </body>

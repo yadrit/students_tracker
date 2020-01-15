@@ -6,11 +6,16 @@
 </head>
 <body>
 
-<form action="/students/" method="get">
+<p>
+<button onclick="window.location.href = '{% url 'students-add' %}';">Add Student</button>
+</p>
+
+<form action="{% url 'students' %}" method="get">
     <input name="first_name">
     <input name="submit" type="submit">
 </form>
 
+<p></p>
 {{ students_list|safe }}
 
 </body>

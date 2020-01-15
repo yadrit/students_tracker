@@ -6,10 +6,16 @@
 </head>
 <body>
 
-<form action="/groups/" method="get">
+<p>
+<button onclick="window.location.href = '{% url 'groups-add' %}';">Add Group</button>
+</p>
+
+<form action="{% url 'groups' %}" method="get">
     <input name="group_code">
     <input name="submit" type="submit">
 </form>
+
+<p></p>
 
 {{ groups_list|safe }}
 
