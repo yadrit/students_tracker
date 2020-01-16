@@ -36,10 +36,11 @@ class ContactForm(Form):
         dateTimeObj = datetime.now()
         timestampStr = dateTimeObj.strftime("%d-%b-%Y (%H:%M:%S)")
 
-        f = open("logfile.txt", "a")
-        f.write("Current Timestamp : " + timestampStr + "\n")
-        f.write("Subject: " + subject + "\n")
-        f.write("Message: " + message + "\n")
-        f.write("From: " + email_from + "\n")
-        f.write("Recipients: " + ', '.join(recipient_list) + "\nEnd\n\n")
-        f.close()
+        with open("logfile.txt", "a") as f:
+            f.write("Current Timestamp : " + timestampStr + "\n")
+            f.write("Subject: " + subject + "\n")
+            f.write("Message: " + message + "\n")
+            f.write("From: " + email_from + "\n")
+            f.write("Recipients: " + ', '.join(recipient_list) + "\nEnd\n\n")
+            f.close()
+
