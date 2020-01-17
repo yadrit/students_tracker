@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 <p>
 <button onclick="window.location.href = '{% url 'students-add' %}';">Add Student</button>
 </p>
+
 
 <form action="{% url 'students' %}" method="get">
     <input name="first_name">
@@ -16,7 +12,12 @@
 </form>
 
 <p></p>
-{{ students_list|safe }}
 
-</body>
-</html>
+
+{% for student in students %}
+    <a href="{% url 'students-edit' student.id %}">student edit</a>
+    {{ student.id }} {{ student.first_name }} {{ student.last_name }} {{ student.email }}<br>
+{% endfor %}
+
+{# students_list|safe #}
+{% endblock content %}
