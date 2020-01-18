@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    LIST OF STUDENTS
+{% endblock %}
+
+
 {% block content %}
 <p>
 <button onclick="window.location.href = '{% url 'students-add' %}';">Add Student</button>
@@ -13,10 +18,27 @@
 
 <p></p>
 
-
+<table style="width:100%">
+  <tr>
+    <th>student edit</th>
+    <th>ID</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>E-Mail</th>
+  </tr>
+</table>
 {% for student in students %}
-    <a href="{% url 'students-edit' student.id %}">student edit</a>
-    {{ student.id }} {{ student.first_name }} {{ student.last_name }} {{ student.email }}<br>
+
+<table style="width:100%">
+  <tr>
+    <td><a href="{% url 'students-edit' student.id %}">student edit</a></td>
+    <td>{{ student.id }}</td>
+    <td>{{ student.first_name }}</td>
+    <td>{{ student.last_name }}</td>
+    <td>{{ student.email }}</td>
+  </tr>
+</table>
+<br>
 {% endfor %}
 
 {# students_list|safe #}

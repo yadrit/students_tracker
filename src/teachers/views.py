@@ -14,7 +14,7 @@ def gen_teacher(request):
 
 def teachers(request):
     queryset = Teacher.objects.all()
-    response = ''
+
     fn = request.GET.get('first_name')
 
     if fn:
@@ -22,12 +22,9 @@ def teachers(request):
                                    Q(last_name__icontains=fn) |
                                    Q(email__icontains=fn))
 
-    for teacher in queryset:
-        response += teacher.get_teacher_info() + '<br>'
-
     return render(request,
                   'teachers_list.html',
-                  context={'teachers_list': response})
+                  context={'teachers': queryset})
 
 
 # Logic for Teachers webform
