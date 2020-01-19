@@ -36,18 +36,14 @@ def gen_group(request):
 
 def groups(request):
     queryset = Group.objects.all()
-    response = ''
 
     gc = request.GET.get('group_code')
     if gc:
         queryset = queryset.filter(group_code__contains=gc)
 
-    for group in queryset:
-        response += group.get_group_info() + '<br>'
-
     return render(request,
                   'groups_list.html',
-                  context={'groups_list': response})
+                  context={'groups': queryset})
 
 # Logic for Students webform
 

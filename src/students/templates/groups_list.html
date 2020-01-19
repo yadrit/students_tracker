@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    LIST OF GROUPS
+{% endblock %}
+
+{% block content %}
 
 <p>
 <button onclick="window.location.href = '{% url 'groups-add' %}';">Add Group</button>
@@ -16,8 +16,30 @@
 </form>
 
 <p></p>
+<table style="width:100%">
+  <tr>
+    <th>group edit</th>
+    <th>ID</th>
+    <th>group code</th>
+    <th>number of students</th>
+    <th>faculty</th>
+    <th>Start year</th>
+  </tr>
+</table>
+{% for group in groups %}
+<table style="width:100%">
+  <tr>
+    <td><a href="{% url 'groups-edit' group.id %}">group edit</a></td>
+    <td>{{ group.id }}</td>
+    <td>{{ group.group_code }}</td>
+    <td>{{ group.num_of_students }}</td>
+    <td>{{ group.faculty }}</td>
+    <td>{{ group.start_year }}</td>
+  </tr>
+</table>
+<br>
+{% endfor %}
 
-{{ groups_list|safe }}
+{# groups_list|safe #}
 
-</body>
-</html>
+{% endblock content %}

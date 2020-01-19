@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+{% block head %}
     <meta charset="UTF-8">
-    <title>Title</title>
+	{% block title %}
+    {% endblock %}
+{% endblock %}
+
 </head>
+
 <body>
 
 {% block content %}
