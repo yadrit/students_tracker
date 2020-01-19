@@ -43,4 +43,3 @@ class ContactForm(Form):
             f.write("From: " + email_from + "\n")
             f.write("Recipients: " + ', '.join(recipient_list) + "\nEnd\n\n")
             f.close()
-

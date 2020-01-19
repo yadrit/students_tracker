@@ -20,7 +20,6 @@ def students(request):
     if fn:
         queryset = queryset.filter(first_name__istartswith=fn)
 
-
     return render(request,
                   'students_list.html',
                   context={'students': queryset})
