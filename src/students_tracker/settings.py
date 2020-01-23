@@ -79,16 +79,6 @@ WSGI_APPLICATION = 'students_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hillel',
-        'USER': 'ivgan',
-        'PASSWORD': 'ivgan',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
 
 
 # Password validation
@@ -142,3 +132,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+try:
+    from students_tracker.settings_local import *
+except ImportError:
+    print('settings_local module not found!\n'*5)
