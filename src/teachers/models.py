@@ -23,3 +23,7 @@ class Teacher(models.Model):
                       telephone=random.randint(1111111, 9999999))
         teacher.save()
         return teacher
+
+    # Overriding in order to see group_code instead of 'Group object' in admin
+    def __str__(self):
+        return f'{self.degree} {self.first_name} {self.last_name}'

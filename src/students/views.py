@@ -34,7 +34,7 @@ def gen_group(request):
 
 
 def groups(request):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('curator')
 
     gc = request.GET.get('group_code')
     if gc:

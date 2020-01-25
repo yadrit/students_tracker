@@ -24,6 +24,8 @@
     <th>number of students</th>
     <th>faculty</th>
     <th>Start year</th>
+    <th>Curator</th>
+    <th>Senior</th>
   </tr>
 </table>
 {% for group in groups %}
@@ -35,6 +37,8 @@
     <td>{{ group.num_of_students }}</td>
     <td>{{ group.faculty }}</td>
     <td>{{ group.start_year }}</td>
+    <td>{{ group.curator.last_name }}</td>
+    <td>{{ group.senior }}</td>
   </tr>
 </table>
 <br>

@@ -11,9 +11,9 @@ class Student(models.Model):
     birth_date = models.DateField()
     email = models.EmailField()
     # add avatar TODO
-    telephone = models.CharField(max_length=16)
+    telephone = models.CharField(max_length=30)
     address = models.CharField(max_length=255, null=True, blank=True)
-    group = models.ForeignKey('students.Group', null=True, blank=True, on_delete=models.CASCADE)
+    group = models.ForeignKey('students.Group', models.SET_NULL, null=True, blank=True)
 
     def get_info(self):
         return f'{self.first_name} | {self.last_name} | {self.birth_date} | {self.email} | {self.telephone}'
@@ -40,6 +40,12 @@ class Student(models.Model):
         student.save()
         return student
 
+    def __str__(self):
+        return f'{self.id} {self.full_name}'
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
 # 6.2 Create command which will generate 100 of students -
 # it should run as custom django-admin command
 # and add students to DB
@@ -53,8 +59,8 @@ class Group(models.Model):
     num_of_students = models.CharField(max_length=3)
     faculty = models.CharField(max_length=50)
     start_year = models.CharField(max_length=4)
-    senior_last_name = models.CharField(max_length=20)
-    senior_phone = models.CharField(max_length=16)
+    senior = models.ForeignKey('students.Student', models.SET_NULL, related_name='senior', null=True, blank=True)
+    curator = models.ForeignKey('teachers.Teacher', models.SET_NULL, related_name='curator', null=True, blank=True)
 
     def get_group_info(self):
         return f'{self.group_code} | {self.faculty} | {self.start_year} | {self.num_of_students}'
@@ -68,3 +74,7 @@ class Group(models.Model):
                     num_of_students=randint(0, 50))
         group.save()
         return group
+
+    # Overriding in order to see group_code instead of 'Group object' in admin
+    def __str__(self):
+        return f'{self.group_code}'
