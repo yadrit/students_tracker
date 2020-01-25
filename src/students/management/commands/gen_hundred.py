@@ -38,5 +38,3 @@ class Command(BaseCommand):
             group.curator = random.choice(teachers)
             group.senior = random.choice(students)
             group.save()
-
-

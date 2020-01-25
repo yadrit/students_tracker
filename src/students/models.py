@@ -74,3 +74,7 @@ class Group(models.Model):
                     num_of_students=randint(0, 50))
         group.save()
         return group
+
+    # Overriding in order to see group_code instead of 'Group object' in admin
+    def __str__(self):
+        return f'{self.group_code}'
