@@ -6,14 +6,26 @@ from random import randint
 
 
 class Student(models.Model):
+    GRADE_CHOICES = (
+        (1, 'FreshMan'),
+        (2, 'Senior')
+    )
+
+    grade = models.PositiveSmallIntegerField(GRADE_CHOICES, default=1)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     birth_date = models.DateField()
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     # add avatar TODO
     telephone = models.CharField(max_length=30)
     address = models.CharField(max_length=255, null=True, blank=True)
     group = models.ForeignKey('students.Group', models.SET_NULL, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # pre_save
+        # self.email = self.email.lower()
+        super().save(*args, **kwargs)
+        # post_save
 
     def get_info(self):
         return f'{self.first_name} | {self.last_name} | {self.birth_date} | {self.email} | {self.telephone}'
@@ -23,7 +35,7 @@ class Student(models.Model):
         student = cls(first_name='D',
                       last_name='K',
                       birth_date=datetime.now().date(),
-                      email='asdas@gmail.com',
+                      email='TTTTTTTT@gmail.com',
                       telephone='+41x21oas4212')
         student.save()
 
@@ -78,3 +90,5 @@ class Group(models.Model):
     # Overriding in order to see group_code instead of 'Group object' in admin
     def __str__(self):
         return f'{self.group_code}'
+
+from students.signals import *

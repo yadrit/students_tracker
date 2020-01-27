@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, EmailField, CharField
+from django.forms import ModelForm, Form, EmailField, CharField, ValidationError
 from students.models import Student, Group
 from django.core.mail import send_mail
 from django.conf import settings
@@ -16,6 +16,29 @@ class GroupsAddForm(ModelForm):
         model = Group
         fields = '__all__'
 
+class StudentAdminForm(ModelForm):
+    class Meta():
+        model = Student
+        fields = ('id', 'email', 'first_name', 'last_name', 'telephone', 'grade')
+
+    # Make email to be unique
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        email_exists = Student.objects.filter(email__iexact=email).exclude(email__iexact=self.instance.email).exists()
+
+        if email_exists:
+            raise ValidationError(f'{email} is already used')
+        return email
+
+    # Make telephone to be unique
+    def clean_telephone(self):
+        telephone = self.cleaned_data['telephone']
+        telephone_exists = Student.objects.filter(telephone__iexact=telephone)\
+            .exclude(telephone__iexact=self.instance.telephone).exists()
+
+        if telephone_exists:
+            raise ValidationError(f'{telephone} is already in use')
+        return telephone
 
 class ContactForm(Form):
     email = EmailField()
