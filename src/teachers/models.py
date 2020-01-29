@@ -6,8 +6,8 @@ import random
 class Teacher(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    email = models.EmailField()
-    telephone = models.CharField(max_length=16)
+    email = models.EmailField(unique=True)
+    telephone = models.CharField(max_length=16, unique=True)
     degree = models.CharField(max_length=20)
 
     def get_teacher_info(self):
