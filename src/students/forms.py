@@ -5,22 +5,7 @@ from django.conf import settings
 from datetime import datetime
 
 
-class StudentsAddForm(ModelForm):
-    class Meta:
-        model = Student
-        fields = '__all__'
-
-
-class GroupsAddForm(ModelForm):
-    class Meta:
-        model = Group
-        fields = '__all__'
-
-class StudentAdminForm(ModelForm):
-    class Meta():
-        model = Student
-        fields = ('id', 'email', 'first_name', 'last_name', 'telephone', 'grade')
-
+class BaseStudentForm(ModelForm):
     # Make email to be unique
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
@@ -30,15 +15,47 @@ class StudentAdminForm(ModelForm):
             raise ValidationError(f'{email} is already used')
         return email
 
-    # Make telephone to be unique
+    # Make telephone to be unique and contain only digits
     def clean_telephone(self):
         telephone = self.cleaned_data['telephone']
         telephone_exists = Student.objects.filter(telephone__iexact=telephone)\
             .exclude(telephone__iexact=self.instance.telephone).exists()
 
-        if telephone_exists:
-            raise ValidationError(f'{telephone} is already in use')
-        return telephone
+        if telephone.isdigit():
+            if telephone_exists:
+                raise ValidationError(f'{telephone} is already in use')
+            return telephone
+        else:
+            raise ValidationError('Telephone number should contain only digits')
+
+    # Make first name start from capital letter
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name'].capitalize()
+        return first_name
+
+    # Make last name start from capital letter
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name'].capitalize()
+        return last_name
+
+
+class StudentsAddForm(BaseStudentForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+
+class StudentAdminForm(BaseStudentForm):
+    class Meta():
+        model = Student
+        fields = ('id', 'email', 'first_name', 'last_name', 'telephone', 'grade')
+
+
+class GroupsAddForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
 
 class ContactForm(Form):
     email = EmailField()

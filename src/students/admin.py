@@ -1,6 +1,5 @@
 from django.contrib import admin
 from students.models import Student, Group
-from teachers.models import Teacher
 from students.forms import StudentAdminForm
 
 
@@ -32,9 +31,8 @@ class StudentAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+
 # Registering of StudentAdmin class
-
-
 admin.site.register(Student, StudentAdmin)
 
 
@@ -45,18 +43,15 @@ class GroupAdmin(admin.ModelAdmin):
     list_per_page = 10
     inlines = [StudentInline]
 
+
 # Registering of GroupAdmin class
-
-
 admin.site.register(Group, GroupAdmin)
 
 
-class TeacherAdmin(admin.ModelAdmin):
-    readonly_fields = ('email', )
-    list_display = ('id', 'degree', 'first_name', 'last_name', 'email', 'telephone')
-    list_per_page = 10
+# class TeacherAdmin(admin.ModelAdmin):
+#     #readonly_fields = ('email', )
+#     list_display = ('id', 'degree', 'first_name', 'last_name', 'email', 'telephone')
+#     list_per_page = 10
 
 # Registering of TeacherAdmin class
-
-
-admin.site.register(Teacher, TeacherAdmin)
+# admin.site.register(Teacher, TeacherAdmin)

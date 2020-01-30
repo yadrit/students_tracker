@@ -11,7 +11,7 @@ class Student(models.Model):
         (2, 'Senior')
     )
 
-    grade = models.PositiveSmallIntegerField(GRADE_CHOICES, default=1)
+    grade = models.PositiveSmallIntegerField(GRADE_CHOICES, default=2)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     birth_date = models.DateField()
