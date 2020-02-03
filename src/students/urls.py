@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from students.views import (gen_student, students,
                             gen_group, groups, students_add,
@@ -14,5 +15,6 @@ urlpatterns = [
     path('groups/', groups, name='groups'),
     path('groups/add/', groups_add, name='groups-add'),
     path('groups/edit/<int:pk>', groups_edit, name='groups-edit'),
-    path('contact/', contact, name='contact')
+    path('contact/', contact, name='contact'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login')
 ]

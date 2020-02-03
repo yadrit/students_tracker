@@ -3,7 +3,7 @@ from students.models import Student, Group
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
-
+from students.tasks import send_email_async
 
 class BaseStudentForm(ModelForm):
     # Make email to be unique
@@ -69,7 +69,10 @@ class ContactForm(Form):
         message = data['text']
         email_from = data['email']
         recipient_list = [settings.EMAIL_HOST_USER, ]
-        send_mail(subject, message, email_from, recipient_list, fail_silently=False)
+        student = Student.objects.get_or_create(email=email_from)[0]
+        # student = Student.objects.create(email=email_from)
+        result = send_email_async.delay(subject, message, email_from, recipient_list, student.id)
+        # send_mail(subject, message, email_from, recipient_list, fail_silently=False)
 
         # Logging into txt file (works but slow)
 

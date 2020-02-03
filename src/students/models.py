@@ -14,7 +14,7 @@ class Student(models.Model):
     grade = models.PositiveSmallIntegerField(GRADE_CHOICES, default=2)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    birth_date = models.DateField()
+    birth_date = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     # add avatar TODO
     telephone = models.CharField(max_length=30)

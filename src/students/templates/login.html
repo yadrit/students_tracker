@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <meta charset="UTF-8">
+	<title>{% block title %} {% endblock %}</title>
+{% endblock %}
+
+</head>
+
+<body>
+
+{% block content %}
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input name="LOG IN" type="submit">
+</form>
+
+{% endblock content %}
