@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
 from students.tasks import send_email_async
+from django.contrib.auth.models import User
 
 class BaseStudentForm(ModelForm):
     # Make email to be unique
@@ -18,7 +19,7 @@ class BaseStudentForm(ModelForm):
     # Make telephone to be unique and contain only digits
     def clean_telephone(self):
         telephone = self.cleaned_data['telephone']
-        telephone_exists = Student.objects.filter(telephone__iexact=telephone)\
+        telephone_exists = Student.objects.filter(telephone__iexact=telephone) \
             .exclude(telephone__iexact=self.instance.telephone).exists()
 
         if telephone.isdigit():
@@ -86,3 +87,21 @@ class ContactForm(Form):
             f.write("From: " + email_from + "\n")
             f.write("Recipients: " + ', '.join(recipient_list) + "\nEnd\n\n")
             f.close()
+
+
+
+class UserRegistrationForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.set_password(self.cleaned_data['password'])
+        instance.is_active = False
+        super().save(commit)
+
+
+class UserLoginForm(Form):
+    username = CharField()
+    password = CharField()

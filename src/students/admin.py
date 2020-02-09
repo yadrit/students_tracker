@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db import models
+
 from students.models import Student, Group
 from students.forms import StudentAdminForm
 
@@ -46,6 +48,7 @@ class GroupAdmin(admin.ModelAdmin):
 
 # Registering of GroupAdmin class
 admin.site.register(Group, GroupAdmin)
+# SILKY_MIDDLEWARE_CLASS = 'path.to.your.middleware.MyCustomSilkyMiddleware'
 
 
 # class TeacherAdmin(admin.ModelAdmin):

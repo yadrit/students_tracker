@@ -1,3 +1,4 @@
+from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
 from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
@@ -135,3 +136,41 @@ def groups_edit(request, pk):
     return render(request,
                   'groups_edit.html',
                   context={'form': form, 'pk': pk})
+
+
+def register(request):
+    from students.forms import UserRegistrationForm
+    user_form = UserRegistrationForm
+
+    if request.method == 'POST':
+        form = user_form(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = user_form()
+
+    return render(request,
+                  'registration.html',
+                  context={'form': form})
+
+
+
+def custom_login(request):
+    from students.forms import UserLoginForm
+    user_form = UserLoginForm
+
+    if request.GET.get('logout'):
+        logout(request)
+
+    if request.method == 'POST':
+        form = user_form(request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password'])
+            login(request, user)
+            return HttpResponseRedirect(reverse('students'))
+    else:
+        form = user_form()
+
+    return render(request, 'login.html', context={'form': form})
