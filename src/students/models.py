@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from faker import Faker
+from students_tracker import model_choices
 import random
 from random import randint
 
@@ -91,4 +92,10 @@ class Group(models.Model):
     def __str__(self):
         return f'{self.group_code}'
 
-from students.signals import *
+
+class Logger(models.Model):
+    path = models.CharField(max_length=128)
+    method = models.PositiveSmallIntegerField(choices=model_choices.METHOD_CHOICES)
+    time_delta = models.DecimalField(max_digits=5, decimal_places=3)
+    user_id = models.IntegerField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
