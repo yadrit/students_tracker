@@ -1,7 +1,5 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.core import mail
-from django.core.management import call_command
 
 
 # Create your tests here.
@@ -29,7 +27,6 @@ class TestStudents(TestCase):
     fake = Faker()
     # fixtures = ['db.json']
 
-
     # def setUp(self) -> None:
     #     print('Setup')
     #
@@ -51,7 +48,6 @@ class TestStudents(TestCase):
             'text': self.fake.text(),
         }
 
-
     def test_contact_form(self):
         data = {
             'email': self.fake.email(),
@@ -63,7 +59,6 @@ class TestStudents(TestCase):
         assert response.status_code == 302
         print()
 
-
     def test_contact_form_wrong_email(self):
         data = {
             'email': 'wrong_email',
@@ -72,7 +67,6 @@ class TestStudents(TestCase):
         }
         response = self.client.post(reverse('contact'), data=data)
         assert response.status_code == 200
-
 
     def test_contact_form_empty_subject(self):
         data = {
