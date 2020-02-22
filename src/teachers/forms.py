@@ -25,12 +25,10 @@ class BaseTeacherForm(ModelForm):
         else:
             raise ValidationError('Telephone number should contain only digits')
 
-
     # Make first name start from capital letter
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name'].capitalize()
         return first_name
-
 
     # Make last name start from capital letter
     def clean_last_name(self):

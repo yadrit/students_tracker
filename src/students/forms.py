@@ -6,6 +6,7 @@ from datetime import datetime
 from students.tasks import send_email_async
 from django.contrib.auth.models import User
 
+
 class BaseStudentForm(ModelForm):
     # Make email to be unique
     def clean_email(self):
@@ -86,8 +87,6 @@ class ContactForm(Form):
             f.write("Message: " + message + "\n")
             f.write("From: " + email_from + "\n")
             f.write("Recipients: " + ', '.join(recipient_list) + "\nEnd\n\n")
-            f.close()
-
 
 
 class UserRegistrationForm(ModelForm):

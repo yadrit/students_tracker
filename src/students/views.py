@@ -1,10 +1,9 @@
 from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render
-from students.forms import StudentsAddForm, GroupsAddForm, ContactForm
+from students.forms import StudentsAddForm, GroupsAddForm, ContactForm, UserLoginForm, UserRegistrationForm
 from students.models import Student, Group
 from django.urls import reverse
-
 # Filter by first_name
 
 
@@ -139,7 +138,6 @@ def groups_edit(request, pk):
 
 
 def register(request):
-    from students.forms import UserRegistrationForm
     user_form = UserRegistrationForm
 
     if request.method == 'POST':
@@ -155,9 +153,7 @@ def register(request):
                   context={'form': form})
 
 
-
 def custom_login(request):
-    from students.forms import UserLoginForm
     user_form = UserLoginForm
 
     if request.GET.get('logout'):
@@ -174,3 +170,11 @@ def custom_login(request):
         form = user_form()
 
     return render(request, 'login.html', context={'form': form})
+
+
+def handler404(request, exception):
+    return render(request, 'error_404.html', status=404)
+
+
+def handler500(request):
+    return render(request, 'error_500.html', status=500)

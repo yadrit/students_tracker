@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # from students.admin import *
+from celery.schedules import crontab
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,9 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1&ljivsyw3#52+85h!5ss#pe%t3mr2mvj^e8yiq(!rm8gn^52+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'www.students-tracker.com', 'localhost']
 
 
 # Application definition
@@ -133,6 +134,17 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# AUTH_USER_MODEL = 'account.User'
+
+CELERY_BEAT_SCHEDULE = {
+    'parse-rates': {
+        'task': 'students.tasks.flush_logger',
+        'schedule': crontab(minute=0, hour=0)
+    }
+}
 
 try:
     from students_tracker.settings_local import *
