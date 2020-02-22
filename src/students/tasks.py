@@ -1,8 +1,9 @@
 from celery import shared_task, task
 from django.core.mail import send_mail
 from time import sleep
+import datetime
 
-from students.models import Student
+from students.models import Student, Logger
 
 
 @shared_task
@@ -23,4 +24,5 @@ def send_email_async(subject, message, email_from, recipient_list, student):
 
 @task
 def flush_logger():
-    pass
+    Logger.objects.all().filter(created__gte=datetime.datetime.now()-datetime.timedelta(days=7)).delete()
+
